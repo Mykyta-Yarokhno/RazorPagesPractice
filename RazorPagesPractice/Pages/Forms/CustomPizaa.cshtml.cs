@@ -1,14 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using RazorPagesPractice.Models;
 
 namespace RazorPagesPractice.Pages.Forms
 {
     public class CustomPizaaModel : PageModel
     {
+        [BindProperty]
+        public PizzasModel Pizza { get; set; }
         public void OnGet()
         {
         }
