@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using RazorPagesPractice.Data;
+using RazorPagesPractice.Models;
 
 namespace RazorPagesPractice.Pages.Checkout
 {
@@ -14,6 +12,13 @@ namespace RazorPagesPractice.Pages.Checkout
         public string PizzaName { get; set; }
         public float PizzaPrice { get; set; }
         public string ImageTitle { get; set; }
+
+        private readonly ApplicationDbContext _context;
+
+        public CheckoutModel(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public void OnGet()
         {
             if(string.IsNullOrWhiteSpace(PizzaName))
@@ -25,6 +30,13 @@ namespace RazorPagesPractice.Pages.Checkout
             {
                 ImageTitle = "Create";
             }
+
+            PizzaOrderModel pizzaOrder = new PizzaOrderModel();
+            pizzaOrder.PizzaName = PizzaName;
+            pizzaOrder.BasePrice = PizzaPrice;
+
+            _context.PizzaOrders.Add(pizzaOrder);
+            _context.SaveChanges();
         }
     }
 }
